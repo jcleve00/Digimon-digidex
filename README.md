@@ -2,9 +2,9 @@
 
 ## Collaborators
 
-**Bold** Josh Cleveland
-**Bold** Cierra Franco-Hover
-**Bold** JT Roudebush
+**Josh Cleveland**
+**Cierra Franco-Hover**
+**JT Roudebush**
 
 ## Description
 
