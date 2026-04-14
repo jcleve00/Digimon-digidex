@@ -2,12 +2,12 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="device-width initial-scale=1.0">
+        <meta name="viewport" content="width=device-width initial-scale=1.0">
         <meta name="description" content="Codex for Digimon and digivolution">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
         <link rel="stylesheet" href="/assets/css/style.css">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="./assets/js/script.js"></script>
+        <script src="./assets/js/detailScript.js"></script>
     </head>
     <body>
         <header class="banner">
@@ -24,10 +24,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Digivolution</a>
+                            <a class="nav-link" href="detail.html">Detail</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="about.html">About</a>
@@ -40,6 +40,13 @@
                 </div>
             </div>
             </nav>
+            <div id="digivice-div">
+                <img id="digivice-img" src="./assets/images/digivice.jpg" alt="Digivice from Digimon">
+                <div id="back-button"><div>Back</div></div>
+                <div id="digivice-screen"><img id="digi-detail-image"></div>
+                <div id="next-button"><div>Next</div></div>
+                <div id="prev-button"><div>Prev</div></div>
+            </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     </body>
 </html>
