@@ -1,12 +1,28 @@
+let currentId = null;
+async function searchDigimon() {
+    const name = document.getElementById("searchInput").value.toLowerCase();
 
+    try {
+        const res = await fetch(`https://digi-api.com/api/v1/digimon/${name}`);
+        const data = await res.json();
 
+        currentId = Number(data.id);
+        
+
+        displayImage(data.images[0].href);
+        displayData(data);
+    } catch {
+        document.getElementById("result").innerHTML = "Digimon not found";
+    }
+}
 function getDigimonById(id) {
-    console.log(id);
+    currentId = id;
     axios
         .get(`https://digi-api.com/api/v1/digimon/${id}`)
         .then(function (response) {
             const data = response.data;
             displayImage(data.images[0].href);
+            displayData(data);
         })
         .catch(function (error) {
             console.log(error);
@@ -22,8 +38,19 @@ function displayImage(image) {
     
     digiviceScreen.appendChild(imgElement);
 }
+function displayData(data) {
+    document.getElementById("result").innerHTML = `
+        <div class="card">
+            <h2>${data.name}</h2>
+            <p><b>Level:</b> ${data.levels[0]?.level || "Unknown"}</p>
+            <p><b>Type:</b> ${data.types[0]?.type || "Unknown"}</p>
+            <p><b>Attribute:</b> ${data.attributes[0]?.attribute || "Unknown"}</p>
+            <p>${data.descriptions?.[0]?.description || "No description"}</p>
+        </div>
+    `;
+}
 document.addEventListener("DOMContentLoaded", () => {
-    document.body.style.background = '#cfecf7';
+    
 
     const digiDiv = document.getElementById("digivice-div");
 
@@ -35,13 +62,14 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // Get digimon id from url
-    const params = new URLSearchParams(window.location.search);
-    let id = Number(params.get('id'));
+    urlId = Number(new URLSearchParams(window.location.search).get('id'));
     
-
     // Get digimon by Id and display the image
-    getDigimonById(id);
-
+    if (!isNaN(urlId) && urlId > 0) {
+        currentId = urlId;
+        getDigimonById(currentId);
+    }
+    
     /* Buttons */
     const backBtn = document.getElementById('back-button');
     backBtn.addEventListener('click', () => {
@@ -50,17 +78,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const nextBtn = document.getElementById('next-button');
     nextBtn.addEventListener('click', () => {
-        if (id <= 1488) {
-            id += 1;
-            getDigimonById(id);
+        console.log(currentId);
+        if (currentId < 1488) {
+            currentId += 1;
+            getDigimonById(currentId);
         }
     });
 
     const prevBtn = document.getElementById('prev-button');
     prevBtn.addEventListener('click', () => {
-        if (id > 1) {
-            id -= 1;
-            getDigimonById(id);
+        if (currentId > 1) {
+            currentId -= 1;
+            getDigimonById(currentId);
         }
     });
     

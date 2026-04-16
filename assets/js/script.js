@@ -1,9 +1,12 @@
 // Keeps track of digimon added to grid
+let allDigimon = [];
+let displayedDigimon = [];
 let currentIndex = 0;
+let currentSort = "id-asc";
 
 // Gets all digimon from server
 async function getAllDigimon() {
-    const allDigimon = [];
+    const list = [];
     let page = 0;
 
     while (true) {
@@ -15,7 +18,7 @@ async function getAllDigimon() {
 
         if (!data || data.length === 0) break;
 
-        allDigimon.push(
+        list.push(
             ...data.map(d => ({
                 id: d.id,
                 name: d.name,
@@ -26,14 +29,14 @@ async function getAllDigimon() {
         page++;
     }
 
-    return allDigimon;
+    return list;
 }
 
-function displayCards(digimonList) {
+function displayCards() {
     offset = currentIndex + 12;
     const cardGrid = document.getElementById('card-grid');
 
-    let slicedList = digimonList.slice(currentIndex, offset);
+    let slicedList = allDigimon.slice(currentIndex, offset);
 
     slicedList.forEach(d => {
         const cardDiv = document.createElement("div");
@@ -51,9 +54,7 @@ function displayCards(digimonList) {
         cardId.textContent = `#${d.id}`;
         
         // Create the card and push it the cards list
-        cardDiv.appendChild(cardName)
-        cardDiv.appendChild(image);
-        cardDiv.appendChild(cardId);
+        cardDiv.append(cardName, image, cardId);
 
         cardDiv.addEventListener('click', () => {
             window.location.href = `detail.html?id=${d.id}`;
@@ -63,49 +64,44 @@ function displayCards(digimonList) {
     });
     currentIndex += 12;
 }
-
+function applySort() {
+    switch (currentSort) {
+        case "id-asc":
+            allDigimon.sort((a, b) => a.id - b.id);
+            break;
+        case "id-desc":
+            allDigimon.sort((a, b) => b.id - a.id);
+            break;
+        case "name-asc":
+            allDigimon.sort((a, b) => a.name.localeCompare(b.name));
+            break;
+        case "name-desc":
+            allDigimon.sort((a, b) => b.name.localeCompare(a.name));
+            break;
+    }
+}
 document.addEventListener("DOMContentLoaded", async () => {
     // Request the data from the api
-    const digimon = await getAllDigimon();
-    // Sort in aplhabetical order by name
-    // let sortedDigimon = digimon.sort((a, b) => a.name.localeCompare(b.name));
+    allDigimon = await getAllDigimon();
     
     // Display cards when page loads
-    displayCards(digimon);
+    displayCards();
 
     // Load more cards when load button clicked
     const loadMoreBtn = document.getElementById("load-more-button");
     
     loadMoreBtn.addEventListener('click', () => {
-        displayCards(digimon);
+        displayCards();
     });    
+    document.getElementById("sortSelect").addEventListener("change", (e) => {
+        currentSort = e.target.value;
 
-});
+        currentIndex = 0;
+        document.getElementById("card-grid").innerHTML = "";
 
-const form = document.getElementById("contactForm");
-const successMsg = document.getElementById("successMsg");
-
-form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const subject = document.getElementById("subject").value.trim();
-    const message = document.getElementById("message").value.trim();
-
-    if (!name || !email || !subject || !message) {
-        alert("Please fill out all fields.");
-        return;
-    }
-
-    // Fake submit (since no backend)
-    console.log({
-        name,
-        email,
-        subject,
-        message
+        applySort();
+        displayCards();
     });
 
-    successMsg.classList.remove("d-none");
-    form.reset();
 });
+
