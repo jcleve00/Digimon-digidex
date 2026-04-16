@@ -1,67 +1,107 @@
+let allDigimon = [];
 
+// =====================
+// LOAD ALL DIGIMON ONCE
+// =====================
+async function loadAllDigimon() {
+    let page = 0;
+    allDigimon = [];
 
+    try {
+        while (true) {
+            const res = await axios.get(
+                `https://digi-api.com/api/v1/digimon?page=${page}`
+            );
+
+            const data = res.data.content;
+
+            if (!data || data.length === 0) break;
+
+            allDigimon.push(...data);
+
+            page++;
+        }
+    } catch (err) {
+        console.error("Failed loading list:", err);
+    }
+}
+
+// =====================
+// DISPLAY IMAGE
+// =====================
+function displayImage(imageUrl) {
+    const img = document.getElementById("digi-detail-image");
+
+    if (!img) return;
+
+    img.src = imageUrl;
+}
+
+// =====================
+// GET DIGIMON BY ID (SAFE)
+// =====================
 function getDigimonById(id) {
-    console.log(id);
-    axios
-        .get(`https://digi-api.com/api/v1/digimon/${id}`)
-        .then(function (response) {
-            const data = response.data;
-            displayImage(data.images[0].href);
-        })
-        .catch(function (error) {
-            console.log(error);
-            alert(`Failed to retrieve digimon ${error}`);
-        });
-    
-}
-function displayImage(image) {
-    const digiviceScreen = document.querySelector('#digivice-screen');
-    const imgElement = document.getElementById('digi-detail-image');
+    console.log("Searching for ID:", id);
 
-    imgElement.src = image;
-    
-    digiviceScreen.appendChild(imgElement);
+    const digimon = allDigimon.find(d => d.id === id);
+
+    if (!digimon) {
+        console.error("Digimon not found for ID:", id);
+        return;
+    }
+
+    displayImage(digimon.image);
 }
-document.addEventListener("DOMContentLoaded", () => {
-    document.body.style.background = '#cfecf7';
+
+// =====================
+// INIT
+// =====================
+document.addEventListener("DOMContentLoaded", async () => {
 
     const digiDiv = document.getElementById("digivice-div");
 
-    digiDiv.addEventListener('click', (e) => {
-        const x = e.offsetX;
-        const y = e.offsetY;
+    document.body.style.background = "radial-gradient(circle, #111a33, #05070f)";
 
-        console.log(`x: ${x}, y: ${y}`);
-    });
+    await loadAllDigimon();
 
-    // Get digimon id from url
     const params = new URLSearchParams(window.location.search);
-    let id = Number(params.get('id'));
-    
+    let id = Number(params.get("id"));
 
-    // Get digimon by Id and display the image
+    if (!id) {
+        console.error("No ID in URL");
+        return;
+    }
+
     getDigimonById(id);
 
-    /* Buttons */
-    const backBtn = document.getElementById('back-button');
-    backBtn.addEventListener('click', () => {
-        window.location.href = "index.html";
-    });
+    // =====================
+    // BACK BUTTON
+    // =====================
+    document.getElementById("back-button")
+        .addEventListener("click", () => {
+            window.location.href = "index.html";
+        });
 
-    const nextBtn = document.getElementById('next-button');
-    nextBtn.addEventListener('click', () => {
-        if (id <= 1488) {
-            id += 1;
-            getDigimonById(id);
-        }
-    });
+    // =====================
+    // NEXT
+    // =====================
+    document.getElementById("next-button")
+        .addEventListener("click", () => {
+            if (id < allDigimon.length) {
+                id++;
+                getDigimonById(id);
+            }
+        });
 
-    const prevBtn = document.getElementById('prev-button');
-    prevBtn.addEventListener('click', () => {
-        if (id > 1) {
-            id -= 1;
-            getDigimonById(id);
-        }
-    });
-    
+    // =====================
+    // PREV
+    // =====================
+    document.getElementById("prev-button")
+        .addEventListener("click", () => {
+            if (id > 1) {
+                id--;
+                getDigimonById(id);
+            }
+        });
+
 });

@@ -1,139 +1,171 @@
-/* reset css */
+body {
+    background: #0a0f1c;
+    color: #e0e6ff;
+    font-family: 'Exo 2', sans-serif;
+}
+
+/* Headings = tech feel */
+h1, h2, h3, .navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Banner */
+.banner {
+    background: linear-gradient(90deg, #0a0f1c, #111a33);
+    text-align: center;
+}
+
+.banner-image {
+    max-width: 100%;
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 1px solid #1f2a4d;
+    background-color: #0f1629 !important;
+}
+
+.nav-link {
+    color: #c7d2ff !important;
+}
+
+.nav-link.active {
+    color: #00d4ff !important;
+    text-shadow: 0 0 8px #00d4ff;
+}
+
+/* Cards */
+.card {
+    background: #111a33;
+    border: 1px solid #1f2a4d;
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(45deg, #00d4ff, #007bff);
+    border: none;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+/* Inputs */
+.form-control {
+    background-color: #0a0f1c;
+    border: 1px solid #1f2a4d;
+    color: #e0e6ff;
+}
+
+#digivice-div {
+    position: relative;
+    min-height: 80vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#digivice-img {
+    max-width: 500px;
+    width: 100%;
+}
+
+body {
+    background: radial-gradient(circle at top, #111a33, #070b14, #05070f);
+    color: #e0e6ff;
+}
+
+/* =========================
+   GLOBAL RESPONSIVE FIXES
+========================= */
+
 * {
-    margin: 0;
-    padding:0;
     box-sizing: border-box;
 }
 
-/* body styles */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Prevent horizontal scroll issues */
 body {
-    width:90%;
-    margin: 0 auto;
+    overflow-x: hidden;
 }
 
-/* header styles */
-.banner {
-    background: lightgray ;
-    width: 100%;
-    height: 300px;
-    border: 1px solid black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* =========================
+   GRID RESPONSIVENESS
+========================= */
 
-}
-.banner-image{
-    height: 300px;
-    background-size: cover;
-    background-position: center;
-}
-
-/* nav styles */
-
-
-/* card styles */
-.grid-container{
-    display: flex;
-    flex-flow: column nowrap;
-    flex: 1 1 100%;
-}
 #card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    margin-top: 20px;
-    
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    padding: 16px;
 }
+
+/* =========================
+   CARD FIX
+========================= */
+
 .cardDiv {
-    display: flex;
-    flex-direction: column;
-    background: grey;
-    width: auto;
-    height: 350px;
-    padding: 20px;
-    margin: 10px auto;
-    border-radius: 5px;
-    border: 2px solid black;
-    box-shadow: 0 0 10px;
-}
-
-.cardDiv h3 {
+    background: #111a33;
+    border: 1px solid #1f2a4d;
+    padding: 10px;
+    border-radius: 10px;
     text-align: center;
-    font-size: 1em;
-    color: black;
-    text-shadow: 1px 1px 2px black;
+    transition: transform 0.2s ease;
 }
-.digi-image {
-    width: 200px;
-    height: 200px;
-    margin: 0px auto;
-    border: 1px solid darkGreen;
-    box-shadow: 0px 0px 10px white;
-}
-.cardDiv p {
-    text-align:center;
-    margin-top: 3em;
-}
-#load-more-button{
-    background-color: aquamarine;
-    border-radius: 20px;
-}
-/* digivice */
-#digivice-div{
-    display: flex;
-    flex-flow: column nowrap;
-    margin: 0 auto;
-    width: 600px;
-    height:auto;
-    border:1px solid black;
-    position: relative;
-}
-#digivice-img{
-    margin: 0;
-    padding: 0;
-}
-#digivice-screen{
-    position: absolute;
-    transform: translate(206px, 212px);
-    width: 174px;
-    height:174px;
-    border-radius: 15px;
-}
-#digi-detail-image{
-    width: 174px;
-    height: 174px;
-    border-radius: 15px;
-}
-#back-button{
-    position: absolute;
-    transform: translate(103px, 255px);
-    width:90px;
-    height: 90px;
-    border-radius: 50px;
-    color:white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#next-button{
-    position:absolute;
-    transform: translate(394px, 246px);
-    width: 80px;
-    height: 46px;
-    border-radius: 50px;
-    color:white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-#prev-button{
-    position:absolute;
-    transform: translate(394px, 321px);
-    width: 80px;
-    height: 46px;
-    border-radius: 50px;
-    color:white;
 
+.cardDiv:hover {
+    transform: scale(1.05);
+}
+
+/* =========================
+   DIGIVICE RESPONSIVE FIX
+========================= */
+
+#digivice-div {
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 80vh;
+    flex-direction: column;
+    position: relative;
+    padding: 20px;
+}
+
+#digivice-img {
+    width: 100%;
+    max-width: 450px;
+}
+
+/* Screen scales with device */
+#digivice-screen {
+    position: absolute;
+    width: 40%;
+    max-width: 180px;
+}
+
+/* =========================
+   MOBILE TWEAKS
+========================= */
+
+@media (max-width: 768px) {
+
+    .navbar-nav {
+        text-align: center;
+    }
+
+    #digivice-screen {
+        width: 60%;
+        max-width: 140px;
+    }
+
+    #load-more-button {
+        width: 100%;
+    }
 }
