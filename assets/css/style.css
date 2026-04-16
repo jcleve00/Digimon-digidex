@@ -14,6 +14,74 @@ body {
     width:90%;
     margin: 0 auto;
 }
+
+/*Index page*/
+.main-card {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #00ffcc;
+    border-radius: 15px;
+
+    box-shadow: 0 0 20px #00ffcc;
+
+    text-align: center;
+}
+
+/* nicer text spacing */
+.main-card p {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
+/* glitter overlay */
+.glitter-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: -1;
+}
+
+/* layer 1 */
+.glitter-bg::before,
+.glitter-bg::after {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background-image:
+        radial-gradient(circle, rgba(0, 255, 255, 0.9) 1px, transparent 2px),
+        radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
+        radial-gradient(circle, rgba(120, 180, 255, 0.8) 1px, transparent 2px),
+        radial-gradient(circle, rgba(180, 120, 255, 0.7) 1px, transparent 2px);
+    background-size: 120px 120px, 180px 180px, 150px 150px, 200px 200px;
+    animation: glitterFall 14s linear infinite;
+    opacity: 0.7;
+}
+
+/* second layer for more sparkle */
+.glitter-bg::after {
+    animation: glitterFall 22s linear infinite;
+    opacity: 0.45;
+    filter: blur(1px);
+}
+
+@keyframes glitterFall {
+    from {
+        transform: translateY(-10%) translateX(0);
+    }
+    to {
+        transform: translateY(50%) translateX(-5%);
+    }
+}
 /* search button */
 button {
     margin: 10px;
@@ -217,4 +285,116 @@ nav {
     border: 1px solid #00ffcc;
     margin: 20px;
     padding: 10px;
+}
+
+/*Summon*/
+.summon-card-area {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00ffcc;
+    border-radius: 20px;
+    box-shadow: 0 0 20px #00ffcc;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+#summon-stage {
+    margin: 10px auto;
+    min-height: 320px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gacha-card {
+    width: 220px;
+    min-height: 300px;
+    height: auto;
+    border-radius: 20px;
+    border: 2px solid #00ffcc;
+    background: linear-gradient(145deg, #021014, #062c33, #0a1d2c);
+    box-shadow:
+        0 0 15px #00ffcc,
+        0 0 30px rgba(0, 255, 204, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.card-front {
+    font-size: 1.4rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #00ffcc;
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+.hidden {
+    display: none;
+}
+
+.shake {
+    animation: shakeCard 0.7s ease-in-out infinite;
+}
+
+.glow-pulse {
+    animation: glowPulse 0.9s ease-in-out infinite alternate;
+}
+
+.flip-out {
+    animation: flipOut 1s ease forwards;
+}
+
+.result {
+    margin-top: 10px;
+}
+
+.result-card {
+    max-width: 350px;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, 0.88);
+    border: 2px solid #00ffcc;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 0 0 18px #00ffcc;
+}
+
+.result-card img {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* keeps it inside card */
+    object-fit: contain;
+}
+
+@keyframes shakeCard {
+    0% { transform: rotate(-2deg) translateX(0); }
+    25% { transform: rotate(2deg) translateX(4px); }
+    50% { transform: rotate(-2deg) translateX(-4px); }
+    75% { transform: rotate(2deg) translateX(4px); }
+    100% { transform: rotate(-2deg) translateX(0); }
+}
+
+@keyframes glowPulse {
+    from {
+        box-shadow: 0 0 12px #00ffcc, 0 0 22px rgba(0,255,204,0.3);
+    }
+    to {
+        box-shadow: 0 0 28px #00ffcc, 0 0 50px rgba(0,255,204,0.7);
+    }
+}
+
+@keyframes flipOut {
+    0% {
+        transform: scale(1) rotateY(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.2) rotateY(540deg);
+        opacity: 0;
+    }
 }
