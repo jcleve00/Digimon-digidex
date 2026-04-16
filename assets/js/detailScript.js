@@ -15,28 +15,32 @@ async function searchDigimon() {
         document.getElementById("result").innerHTML = "Digimon not found";
     }
 }
-function getDigimonById(id) {
-    currentId = id;
-    axios
-        .get(`https://digi-api.com/api/v1/digimon/${id}`)
-        .then(function (response) {
-            const data = response.data;
-            displayImage(data.images[0].href);
-            displayData(data);
-        })
-        .catch(function (error) {
-            console.log(error);
-            alert(`Failed to retrieve digimon ${error}`);
-        });
-    
+async function getDigimonById(id) {
+    try {
+        const res = await fetch(`https://digi-api.com/api/v1/digimon/${id}`);
+        const data = await res.json();
+
+        currentId = Number(data.id);
+
+        displayImage(data.images[0].href);
+        displayData(data);
+    } catch (error) {
+        console.log(error);
+        alert(`Failed to retrieve digimon`);
+    }
 }
 function displayImage(image) {
     const digiviceScreen = document.querySelector('#digivice-screen');
     const imgElement = document.getElementById('digi-detail-image');
+    const mobileImg = document.getElementById('mobile-digi-image');
 
-    imgElement.src = image;
-    
-    digiviceScreen.appendChild(imgElement);
+    if (imgElement) {
+        imgElement.src = image;
+    }
+
+    if (mobileImg) {
+        mobileImg.src = image;
+    }
 }
 function displayData(data) {
     document.getElementById("result").innerHTML = `
@@ -48,6 +52,22 @@ function displayData(data) {
             <p>${data.descriptions?.[0]?.description || "No description"}</p>
         </div>
     `;
+}
+function getNext() {
+    if (currentId < 1488) {
+        currentId += 1;
+        getDigimonById(currentId);
+    }
+}
+function getPrev() {
+    if (currentId > 1) {
+        currentId -= 1;
+        getDigimonById(currentId);
+    }
+}
+
+function goBack() {
+    window.location.href = "index.html";
 }
 document.addEventListener("DOMContentLoaded", () => {
     
@@ -70,27 +90,14 @@ document.addEventListener("DOMContentLoaded", () => {
         getDigimonById(currentId);
     }
     
-    /* Buttons */
-    const backBtn = document.getElementById('back-button');
-    backBtn.addEventListener('click', () => {
-        window.location.href = "index.html";
-    });
-
-    const nextBtn = document.getElementById('next-button');
-    nextBtn.addEventListener('click', () => {
-        console.log(currentId);
-        if (currentId < 1488) {
-            currentId += 1;
-            getDigimonById(currentId);
-        }
-    });
-
-    const prevBtn = document.getElementById('prev-button');
-    prevBtn.addEventListener('click', () => {
-        if (currentId > 1) {
-            currentId -= 1;
-            getDigimonById(currentId);
-        }
-    });
+    // Desktop buttons
+    document.getElementById('next-button')?.addEventListener('click', getNext);
+    document.getElementById('prev-button')?.addEventListener('click', getPrev);
+    document.getElementById('back-button')?.addEventListener('click', goBack);
+    
+    // Mobile buttons
+    document.getElementById('next-mobile')?.addEventListener('click', getNext);
+    document.getElementById('prev-mobile')?.addEventListener('click', getPrev);
+    document.getElementById('back-mobile')?.addEventListener('click', goBack);
     
 });
