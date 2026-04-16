@@ -33,19 +33,26 @@ function getDigimonById(id) {
 function displayImage(image) {
     const digiviceScreen = document.querySelector('#digivice-screen');
     const imgElement = document.getElementById('digi-detail-image');
+    
 
     imgElement.src = image;
     
     digiviceScreen.appendChild(imgElement);
 }
 function displayData(data) {
-    document.getElementById("result").innerHTML = `
+    const result = document.getElementById("result");
+
+    const englishDesc = data.descriptions?.find(
+        desc => desc.language === "en_us"
+    );
+
+    result.innerHTML = `
         <div class="card">
-            <h2>${data.name}</h2>
-            <p><b>Level:</b> ${data.levels[0]?.level || "Unknown"}</p>
-            <p><b>Type:</b> ${data.types[0]?.type || "Unknown"}</p>
-            <p><b>Attribute:</b> ${data.attributes[0]?.attribute || "Unknown"}</p>
-            <p>${data.descriptions?.[0]?.description || "No description"}</p>
+            <h2>${data.name || "Unknown"}</h2>
+            <p><b>Level:</b> ${data.levels?.[0]?.level || "Unknown"}</p>
+            <p><b>Type:</b> ${data.types?.[0]?.type || "Unknown"}</p>
+            <p><b>Attribute:</b> ${data.attributes?.[0]?.attribute || "Unknown"}</p>
+            <p>${englishDesc?.description || "No English description"}</p>
         </div>
     `;
 }
