@@ -1,11 +1,97 @@
-/* reset css */
+body {
+    background: black;
+    color: #00ffcc;
+    font-family: monospace;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.glow {
+    text-shadow: 0 0 10px #00ffcc;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    width: 220px;
+    border: 2px solid #00ffcc;
+    background: #111;
+    color: #00ffcc;
+    font-family: monospace;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 14px;
+    background: black;
+    border: 2px solid #00ffcc;
+    color: #00ffcc;
+    cursor: pointer;
+    font-family: monospace;
+}
+
+button:hover {
+    background: #00ffcc;
+    color: black;
+}
+
+a {
+    color: #00ffcc;
+}
+
+.digivice-container {
+    position: relative;
+    width: 700px;
+    margin: 20px auto;
+}
+
+.digivice-frame {
+    width: 100%;
+    display: block;
+}
+
+.digivice-screen {
+    position: absolute;
+    top: 150px;
+    left: 200px;
+    width: 160px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.digivice-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+    filter: drop-shadow(0 0 8px #00ffcc);
+}
+
+.card {
+    border: 1px solid #00ffcc;
+    margin: 20px auto;
+    padding: 12px;
+    max-width: 500px;
+    background: transparent;
+    color: #00ffcc;
+}
+/* reset css
 * {
     margin: 0;
     padding:0;
     box-sizing: border-box;
 }
 
-/* body styles */
+/* body styles 
 body {
     background: black;
     color: #00ffcc;

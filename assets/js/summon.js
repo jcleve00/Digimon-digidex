@@ -31,7 +31,6 @@ async function summonDigimonGacha() {
 
         const digimon = detailResponse.data;
 
-        gachaCard.classList.add("hidden");
         gachaCard.classList.remove("glow-pulse", "flip-out");
 
         displayPulledDigimon(digimon);
@@ -63,7 +62,7 @@ function displayPulledDigimon(digimon) {
         </div>
     `;
 
-    // Show it again (since we hid it earlier)
+    // Show it again
     gachaCard.classList.remove("hidden");
 }
 
