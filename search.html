@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Digimon</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+    <h1 class="glow">Search Digimon</h1>
+
+    <div class="controls">
+        <input type="text" id="searchInput" placeholder="Enter Digimon name">
+        <button onclick="searchDigimon()">Search</button>
+    </div>
+
+    <div class="digivice-container">
+        <img src="assets/images/digivice.png" class="digivice-frame" alt="Digivice">
+        <div class="digivice-screen">
+            <img id="digimonImage" src="" alt="Digimon">
+        </div>
+    </div>
+
+    <div id="result"></div>
+
+    <p><a href="index.html">⬅ Back</a></p>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

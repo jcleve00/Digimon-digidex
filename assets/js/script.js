@@ -1,4 +1,54 @@
-// Keeps track of digimon added to grid
+async function searchDigimon() {
+    const name = document.getElementById("searchInput").value.trim().toLowerCase();
+    const result = document.getElementById("result");
+    const img = document.getElementById("digimonImage");
+    
+
+    if (!name) {
+        result.innerHTML = "<p>Please enter a Digimon name.</p>";
+        img.src = "";
+        img.style.display = "none";
+        return;
+    }
+
+    try {
+        const res = await fetch(`https://digi-api.com/api/v1/digimon/${name}`);
+
+        if (!res.ok) {
+            throw new Error("Digimon not found");
+        }
+
+        const d = await res.json();
+        displayDigimon(d);
+    } catch (error) {
+        result.innerHTML = `<p>${error.message}</p>`;
+        img.src = "";
+        img.style.display = "none";
+    }
+}
+
+function displayDigimon(d) {
+    const img = document.getElementById("digimonImage");
+    const result = document.getElementById("result");
+    const englishDesc = d.descriptions.find(desc => desc.language === "en_us");
+
+    const imageUrl = d.images?.[0]?.href || "";
+
+    img.src = imageUrl;
+    img.alt = d.name || "Digimon";
+    img.style.display = imageUrl ? "block" : "none";
+
+result.innerHTML = `
+    <div class="card">
+        <h2>${d.name || "Unknown"}</h2>
+        <p><strong>Level:</strong> ${d.levels?.[0]?.level || "Unknown"}</p>
+        <p><strong>Type:</strong> ${d.types?.[0]?.type || "Unknown"}</p>
+        <p><strong>Attribute:</strong> ${d.attributes?.[0]?.attribute || "Unknown"}</p>
+        <p>${englishDesc?.description || "No English description available."}</p>
+    </div>
+`;
+}
+/* // Keeps track of digimon added to grid
 let currentIndex = 0;
 
 // Gets all digimon from server
@@ -80,4 +130,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         displayCards(digimon);
     });    
 
-});
+}); */
