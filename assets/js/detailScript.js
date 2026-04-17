@@ -1,20 +1,42 @@
 let currentId = null;
+
+// SEARCH FUNCTION
 async function searchDigimon() {
-    const name = document.getElementById("searchInput").value.toLowerCase();
+    const name = document.getElementById("searchInput").value.trim();
+
+    if (!name) {
+        document.getElementById("result").innerHTML = "Enter a Digimon name.";
+        return;
+    }
 
     try {
-        const res = await fetch(`https://digi-api.com/api/v1/digimon/${name}`);
-        const data = await res.json();
+        // search
+        const searchRes = await fetch(
+            `https://digi-api.com/api/v1/digimon?name=${encodeURIComponent(name)}&exact=true`
+        );
+
+        const searchJson = await searchRes.json();
+        const found = searchJson.content?.[0];
+
+        if (!found) throw new Error();
+
+        //get FULL data using ID
+        const detailRes = await fetch(
+            `https://digi-api.com/api/v1/digimon/${found.id}`
+        );
+
+        const data = await detailRes.json();
 
         currentId = Number(data.id);
-        
 
-        displayImage(data.images[0].href);
+        displayImage(data.images?.[0]?.href || "");
         displayData(data);
+
     } catch {
         document.getElementById("result").innerHTML = "Digimon not found";
     }
 }
+// GET BY ID (for next/prev)
 async function getDigimonById(id) {
     try {
         const res = await fetch(`https://digi-api.com/api/v1/digimon/${id}`);
@@ -22,26 +44,24 @@ async function getDigimonById(id) {
 
         currentId = Number(data.id);
 
-        displayImage(data.images[0].href);
+        displayImage(data.images?.[0]?.href || "");
         displayData(data);
+
     } catch (error) {
         console.log(error);
-        alert(`Failed to retrieve digimon`);
+        alert("Failed to retrieve Digimon");
     }
 }
-function displayImage(image) {
-    const digiviceScreen = document.querySelector('#digivice-screen');
-    const imgElement = document.getElementById('digi-detail-image');
-    const mobileImg = document.getElementById('mobile-digi-image');
 
+//DISPLAY IMAGE
+function displayImage(image) {
+    const imgElement = document.getElementById('digi-detail-image');
     if (imgElement) {
         imgElement.src = image;
     }
-
-    if (mobileImg) {
-        mobileImg.src = image;
-    }
 }
+
+//DISPLAY DATA
 function displayData(data) {
     const result = document.getElementById("result");
 
@@ -52,58 +72,46 @@ function displayData(data) {
     result.innerHTML = `
         <div class="card">
             <h2>${data.name || "Unknown"}</h2>
+            <p><b>ID:</b> ${data.id}</p>
             <p><b>Level:</b> ${data.levels?.[0]?.level || "Unknown"}</p>
             <p><b>Type:</b> ${data.types?.[0]?.type || "Unknown"}</p>
             <p><b>Attribute:</b> ${data.attributes?.[0]?.attribute || "Unknown"}</p>
-            <p>${englishDesc?.description || "No English description"}</p>
+            <p>${englishDesc?.description || "No description available"}</p>
         </div>
     `;
 }
+
+// NEXT
 function getNext() {
     if (currentId < 1488) {
-        currentId += 1;
-        getDigimonById(currentId);
-    }
-}
-function getPrev() {
-    if (currentId > 1) {
-        currentId -= 1;
+        currentId++;
         getDigimonById(currentId);
     }
 }
 
+// PREV
+function getPrev() {
+    if (currentId > 1) {
+        currentId--;
+        getDigimonById(currentId);
+    }
+}
+
+// BACK
 function goBack() {
     window.location.href = "index.html";
 }
+
+//EVENTS
 document.addEventListener("DOMContentLoaded", () => {
-    
+    const urlId = Number(new URLSearchParams(window.location.search).get('id'));
 
-    const digiDiv = document.getElementById("digivice-div");
-
-    digiDiv.addEventListener('click', (e) => {
-        const x = e.offsetX;
-        const y = e.offsetY;
-
-        console.log(`x: ${x}, y: ${y}`);
-    });
-
-    // Get digimon id from url
-    urlId = Number(new URLSearchParams(window.location.search).get('id'));
-    
-    // Get digimon by Id and display the image
     if (!isNaN(urlId) && urlId > 0) {
         currentId = urlId;
         getDigimonById(currentId);
     }
-    
-    // Desktop buttons
+
     document.getElementById('next-button')?.addEventListener('click', getNext);
     document.getElementById('prev-button')?.addEventListener('click', getPrev);
     document.getElementById('back-button')?.addEventListener('click', goBack);
-    
-    // Mobile buttons
-    document.getElementById('next-mobile')?.addEventListener('click', getNext);
-    document.getElementById('prev-mobile')?.addEventListener('click', getPrev);
-    document.getElementById('back-mobile')?.addEventListener('click', goBack);
-    
 });

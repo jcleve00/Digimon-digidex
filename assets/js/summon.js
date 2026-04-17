@@ -6,7 +6,6 @@ summonBtn.addEventListener("click", summonDigimonGacha);
 async function summonDigimonGacha() {
     summonBtn.disabled = true;
 
-    // reset summon card each time
     gachaCard.innerHTML = `
         <div class="card-front">
             <p class="glow">DIGIMON</p>
@@ -17,11 +16,22 @@ async function summonDigimonGacha() {
     gachaCard.classList.add("shake", "glow-pulse");
 
     try {
-        const listResponse = await axios.get("https://digi-api.com/api/v1/digimon?pageSize=300");
-        const digimonList = listResponse.data.content;
+        const listResponse = await axios.get(
+            "https://digi-api.com/api/v1/digimon?page=0&pageSize=300"
+        );
+
+        const digimonList = listResponse.data?.content || [];
+
+        if (!digimonList.length) {
+            throw new Error("No Digimon returned from API");
+        }
 
         const randomDigimon =
             digimonList[Math.floor(Math.random() * digimonList.length)];
+
+        if (!randomDigimon?.id) {
+            throw new Error("Random Digimon had no ID");
+        }
 
         await delay(2200);
 
@@ -36,17 +46,20 @@ async function summonDigimonGacha() {
 
         const digimon = detailResponse.data;
 
-        gachaCard.classList.remove("glow-pulse", "flip-out");
+        if (!digimon?.id) {
+            throw new Error("Detail lookup failed");
+        }
 
+        gachaCard.classList.remove("glow-pulse", "flip-out");
         displayPulledDigimon(digimon);
     } catch (error) {
-        console.error(error);
+        console.error("Summon error:", error);
         gachaCard.classList.remove("shake", "glow-pulse", "flip-out");
         gachaCard.innerHTML = `<p>Summon failed. Try again.</p>`;
         gachaCard.classList.remove("hidden");
+    } finally {
+        summonBtn.disabled = false;
     }
-
-    summonBtn.disabled = false;
 }
 
 function getRarity(level) {
@@ -60,17 +73,24 @@ function displayPulledDigimon(digimon) {
     const level = digimon.levels?.[0]?.level || "Unknown";
     const attribute = digimon.attributes?.[0]?.attribute || "Unknown";
     const type = digimon.types?.[0]?.type || "Unknown";
-
     const rarity = getRarity(level);
+
+    const englishDesc = digimon.descriptions?.find(
+        desc => desc.language === "en_us"
+    );
 
     gachaCard.innerHTML = `
         <div class="result-card ${rarity}">
             <h2 class="glow">${digimon.name}</h2>
+            <p class="rarity-label ${rarity}">${rarity.toUpperCase()}</p>
             <img src="${image}" alt="${digimon.name}">
-            <p>ID: ${digimon.id}</p>
-            <p>Level: ${level}</p>
-            <p>Attribute: ${attribute}</p>
-            <p>Type: ${type}</p>
+            <p><strong>ID:</strong> ${digimon.id}</p>
+            <p><strong>Level:</strong> ${level}</p>
+            <p><strong>Attribute:</strong> ${attribute}</p>
+            <p><strong>Type:</strong> ${type}</p>
+            <p class="description">
+                ${englishDesc?.description || "No description available."}
+            </p>
         </div>
     `;
 
