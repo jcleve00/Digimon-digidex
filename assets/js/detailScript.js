@@ -99,7 +99,7 @@ function getPrev() {
 
 // BACK
 function goBack() {
-    window.location.href = "index.html";
+    window.location.href = "browse.html";
 }
 
 //EVENTS
