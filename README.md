@@ -33,9 +33,15 @@ This project was built as part of a web development assignment to demonstrate kn
 
 ## 📸 Screenshots
 
+**Home**
 <img src="assets/images/home.jpeg" width="300">
+**Browse**
 <img src="assets/images/browse.jpeg" width="300">
+**Search**
 <img src="assets/images/search.jpeg" width="300">
+**Summon**
 <img src="assets/images/summon.jpeg" width="300">
+**Contact Us**
 <img src="assets/images/contact.jpeg" width="300">
+**About**
 <img src="assets/images/about.jpeg" width="300">
