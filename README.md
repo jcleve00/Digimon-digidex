@@ -33,9 +33,9 @@ This project was built as part of a web development assignment to demonstrate kn
 
 ## 📸 Screenshots
 
-<img src="assets/images/home.jpg" width="300">
-<img src="assets/images/browse.jpg" width="300">
-<img src="assets/images/search.jpg" width="300">
-<img src="assets/images/summon.jpg" width="300">
-<img src="assets/images/contact.jpg" width="300">
-<img src="assets/images/about.jpg" width="300">
+<img src="assets/images/home.jpeg" width="300">
+<img src="assets/images/browse.jpeg" width="300">
+<img src="assets/images/search.jpeg" width="300">
+<img src="assets/images/summon.jpeg" width="300">
+<img src="assets/images/contact.jpeg" width="300">
+<img src="assets/images/about.jpeg" width="300">
