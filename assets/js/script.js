@@ -57,7 +57,7 @@ function displayCards() {
         cardDiv.append(cardName, image, cardId);
 
         cardDiv.addEventListener('click', () => {
-            window.location.href = `detail.html?id=${d.id}`;
+            window.location.href = `search.html?id=${d.id}`;
         });
         
         cardGrid.appendChild(cardDiv);
