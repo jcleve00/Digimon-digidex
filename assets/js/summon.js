@@ -1,12 +1,17 @@
 const summonBtn = document.getElementById("summonBtn");
 const gachaCard = document.getElementById("gacha-card");
-const result = document.getElementById("result");
 
 summonBtn.addEventListener("click", summonDigimonGacha);
 
 async function summonDigimonGacha() {
     summonBtn.disabled = true;
-    result.innerHTML = "";
+
+    // reset summon card each time
+    gachaCard.innerHTML = `
+        <div class="card-front">
+            <p class="glow">DIGIMON</p>
+        </div>
+    `;
 
     gachaCard.classList.remove("hidden", "flip-out");
     gachaCard.classList.add("shake", "glow-pulse");
@@ -36,23 +41,30 @@ async function summonDigimonGacha() {
         displayPulledDigimon(digimon);
     } catch (error) {
         console.error(error);
-        result.innerHTML = `<p>Summon failed. Try again.</p>`;
+        gachaCard.classList.remove("shake", "glow-pulse", "flip-out");
+        gachaCard.innerHTML = `<p>Summon failed. Try again.</p>`;
+        gachaCard.classList.remove("hidden");
     }
 
     summonBtn.disabled = false;
 }
 
-function displayPulledDigimon(digimon) {
-    const gachaCard = document.getElementById("gacha-card");
+function getRarity(level) {
+    if (level.includes("Mega") || level.includes("Ultra")) return "legendary";
+    if (level.includes("Perfect") || level.includes("Ultimate")) return "rare";
+    return "common";
+}
 
+function displayPulledDigimon(digimon) {
     const image = digimon.images?.[0]?.href || "";
     const level = digimon.levels?.[0]?.level || "Unknown";
     const attribute = digimon.attributes?.[0]?.attribute || "Unknown";
     const type = digimon.types?.[0]?.type || "Unknown";
 
-    // Replace the card content IN PLACE
+    const rarity = getRarity(level);
+
     gachaCard.innerHTML = `
-        <div class="result-card">
+        <div class="result-card ${rarity}">
             <h2 class="glow">${digimon.name}</h2>
             <img src="${image}" alt="${digimon.name}">
             <p>ID: ${digimon.id}</p>
@@ -62,7 +74,6 @@ function displayPulledDigimon(digimon) {
         </div>
     `;
 
-    // Show it again
     gachaCard.classList.remove("hidden");
 }
 
