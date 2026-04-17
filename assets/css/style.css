@@ -693,6 +693,21 @@ button:hover {
     height: 100%;
     object-fit: cover;
 }
+/*footer style */
+#footer {
+    display: flex;
+    flex-flow: row nowrap;
+    border-top: 1px solid #1f2a4d;
+    margin-top: 100px;
+}
+.devs {
+    flex: 1 1 33%;
+    font-family: 'Orbitron', sans-serif;
+    color: #c7d2ff;
+}
+.devs a {
+    text-decoration: none;
+}
 /* Mobile Optimization */
 @media (max-width: 600px) {
     .gacha-card {
