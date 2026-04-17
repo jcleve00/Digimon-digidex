@@ -28,12 +28,34 @@ h1, h2, h3, .navbar-brand {
     margin-bottom: 20px;
 }
 
+/*Index video*/
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    max-width: 700px;
+    margin: 100px auto 25px auto;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    border-radius: 10px;
+    border: 2px solid #00ffcc;
+    box-shadow: 0 0 10px #00ffcc;
+}
+
 #searchInput {
     padding: 10px;
     width: 220px;
     border: 2px solid #c7d2ff;
     background: #111;
-    color: #00ffcc;
+    color: #00aeff;
     font-family: 'Orbitron', sans-serif;
 }
 
@@ -61,7 +83,7 @@ a {
 
 /*Index page*/
 .main-card {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 40px auto;
     padding: 30px;
 
@@ -168,7 +190,7 @@ button:hover {
     width: 100%;
     background-color: black;
     border-bottom: 1px solid #1f2a4d;
-    color:#00ffcc;
+    color:#00aeff;
 }
 .navbar-collapse{
     flex-grow:1;
@@ -359,7 +381,7 @@ button:hover {
 
 /*Summon*/
 .summon-card-area {
-    max-width: 800px;
+    max-width: 900px;
     margin: 40px auto;
     padding: 30px;
     background: rgba(0, 0, 0, 0.8);
@@ -372,17 +394,17 @@ button:hover {
 }
 
 #summon-stage {
-    margin: 10px auto;
-    min-height: 320px;
+    margin: 20px auto;
+    min-height: 350px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .gacha-card {
-    width: 280px;
-    min-height: 300px;
-    height: auto;
+    width: 90%;
+    max-width: 520px;
+    min-height: 320px;
     border-radius: 20px;
     border: 2px solid #c7d2ff;
     background: linear-gradient(145deg, #021014, #062c33, #0a1d2c);
@@ -425,25 +447,36 @@ button:hover {
 }
 
 .result-card {
-    max-width: 350px;
-    margin: 0 auto;
-    background: rgba(0, 0, 0, 0.88);
-    border: 2px solid #1f2a4d;
+    width: 100%;
+    max-width: 100%;
+
+    padding: 20px;
     border-radius: 15px;
-    padding: 10px;
-    box-shadow: 0 0 6px #c7d2ff, 0 0 12px rgba(0, 204, 255, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.1);
-    animation: revealPop 0.4s ease;
+
+    background: rgba(0, 0, 0, 0.95);
+
+    animation: revealPop 0.6s ease forwards;
 }
 
 .result-card h2 {
     font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+    margin-bottom: 10px;
+}
+
+.result-card p {
+    max-width: 420px;
+    margin: 8px auto;
+    line-height: 1.6;
 }
 
 .result-card img {
     width: 100%;
-    height: auto;
-    max-height: 300px; /* keeps it inside card */
+    max-width: 300px;
+    max-height: 300px;
+
     object-fit: contain;
+    display: block;
+    margin: 10px auto;
 }
 
 .common {
@@ -470,10 +503,10 @@ button:hover {
 
 @keyframes glowPulse {
     from {
-        box-shadow: 0 0 12px #00ffcc, 0 0 22px rgba(0,255,204,0.3);
+        box-shadow: 0 0 12px #00aeff, 0 0 22px rgba(0, 110, 255, 0.3);
     }
     to {
-        box-shadow: 0 0 28px #00ffcc, 0 0 50px rgba(0,255,204,0.7);
+        box-shadow: 0 0 28px #00aeff, 0 0 50px rgba(0,110,255,0.3);
     }
 }
 
@@ -501,6 +534,30 @@ button:hover {
         opacity: 1;
     }
 }
+
+/* Mobile Optimization */
+@media (max-width: 600px) {
+    .gacha-card {
+        max-width: 360px;
+    }
+
+    .result-card {
+        padding: 15px;
+    }
+
+    .result-card img {
+        max-height: 220px;
+    }
+
+    .result-card h2 {
+        font-size: 1.3rem;
+    }
+
+    .result-card p {
+        font-size: 0.95rem;
+    }
+}
+
 /* Form Inputs */
 .form-control {
     background-color: #0a0f1c;
@@ -539,4 +596,153 @@ button:hover {
         gap: 10px;
         margin-top: 10px;
     }
+}
+
+/*About*/
+.about-card {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+
+    background: rgba(0, 0, 0, 0.85);
+    border: 2px solid #00aeff;
+    border-radius: 20px;
+
+    box-shadow: 0 0 28px #00aeff, 0 0 50px rgba(0,110,255,0.3);
+
+    text-align: center;
+    color: #c7d2ff;
+
+    position: relative;
+    z-index: 1;
+}
+
+.about-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.about-card li {
+    margin: 8px 0;
+}
+
+.credits li {
+    font-size: 1.1rem;
+}
+
+.footer-text {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.team-card {
+    width: 220px;
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.8);
+    border: 2px solid #00aeff;
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow: 0 0 28px #00aeff, 0 0 50px rgba(0,110,255,0.3);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;        /* crops instead of stretching */
+    object-position: center top; /* adjust focus */
+    border-radius: 10px;
+}
+
+/* 🔥 hover effect */
+.team-card:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 0 28px #00aeff, 0 0 50px rgba(0,110,255,0.3);
+}
+
+.team-card h3 {
+    margin-bottom: 5px;
+}
+
+.role {
+    font-weight: bold;
+    color: #00aeff;
+    margin-bottom: 10px;
+}
+
+.team-container {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.digimon-card-ui {
+    width: 240px;
+    padding: 15px;
+
+    background: linear-gradient(145deg, #020617, #0a0f2c);
+    border: 2px solid #00aeff;
+    border-radius: 20px;
+
+    color: #00aeff;
+    text-align: center;
+
+    box-shadow:
+        0 0 10px #00aeff,
+        0 0 25px rgba(0,255,204,0.4);
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 🔥 hover = holographic feel */
+.digimon-card-ui:hover {
+    transform: scale(1.08) rotateY(5deg);
+    box-shadow:
+        0 0 20px #00aeff,
+        0 0 50px rgba(0,255,204,0.6);
+}
+
+.card-header {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    color: #00ccff;
+    letter-spacing: 1px;
+}
+
+.digimon-card-ui h3 {
+    margin-bottom: 10px;
+    text-shadow: 0 0 10px #00aeff;
+}
+
+.card-image {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 10px;
+
+    border-radius: 10px;
+    overflow: hidden;
+
+    border: 2px solid #00aeff;
+    box-shadow: 0 0 10px #00aeff;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
