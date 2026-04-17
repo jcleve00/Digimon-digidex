@@ -380,7 +380,7 @@ button:hover {
 }
 
 .gacha-card {
-    width: 220px;
+    width: 280px;
     min-height: 300px;
     height: auto;
     border-radius: 20px;
@@ -431,14 +431,33 @@ button:hover {
     border: 2px solid #1f2a4d;
     border-radius: 15px;
     padding: 10px;
-    box-shadow: 0 0 18px #c7d2ff;
+    box-shadow: 0 0 6px #c7d2ff, 0 0 12px rgba(0, 204, 255, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.1);
+    animation: revealPop 0.4s ease;
+}
+
+.result-card h2 {
+    font-size: clamp(1.2rem, 2.5vw, 1.8rem);
 }
 
 .result-card img {
     width: 100%;
     height: auto;
-    max-height: 200px; /* keeps it inside card */
+    max-height: 300px; /* keeps it inside card */
     object-fit: contain;
+}
+
+.common {
+    box-shadow: 0 0 6px #00ccff;
+}
+
+.rare {
+    border-color: purple;
+    box-shadow: 0 0 10px purple, 0 0 20px purple;
+}
+
+.legendary {
+    border-color: gold;
+    box-shadow: 0 0 12px gold, 0 0 25px orange;
 }
 
 @keyframes shakeCard {
@@ -466,6 +485,20 @@ button:hover {
     100% {
         transform: scale(1.2) rotateY(540deg);
         opacity: 0;
+    }
+}
+
+@keyframes revealPop {
+    0% {
+        transform: scale(0.6);
+        opacity: 0;
+    }
+    70% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
 /* Form Inputs */
